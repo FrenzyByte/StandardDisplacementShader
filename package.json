@@ -1,0 +1,26 @@
+{
+  "name": "com.frenzy3d.standarddisplacementshader",
+  "displayName": "Standard Displacement Shader",
+  "version": "1.0.0",
+  "unity": "2021.3",
+  "keywords": [
+    "unity",
+    "shaders",
+    "tesselation",
+    "displacement"
+  ],
+  "description": "Unity's Standard Shader with Tessellation and Displacement added to it.",
+  "documentationUrl": "",
+  "author": {
+    "name": "Frenzy3D",
+    "email": "",
+    "url": "https://github.com/Frenzy3D/"
+  },
+  "samples": [
+    {
+        "displayName": "Sample1",
+        "description": "Demonstrates the displacement and tessellation on a plane and sphere mesh. The <i>aerial_rocks_02_1k</i> and <i>ganges_river_pebbles_1k</i> materials can be tweaked to show the functionality of the displacement.",
+        "path": "Samples~/Sample1"
+    }
+  ] 
+}
