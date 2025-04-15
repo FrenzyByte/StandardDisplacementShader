@@ -1,7 +1,7 @@
 {
   "name": "com.frenzy3d.standarddisplacementshader",
   "displayName": "Standard Displacement Shader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "unity": "2021.3",
   "keywords": [
     "unity",
