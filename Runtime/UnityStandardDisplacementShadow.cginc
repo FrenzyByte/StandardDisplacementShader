@@ -6,7 +6,10 @@
 //Check which vertShadowCaster function from the unity cglibrary to use. Between Unity 2021.3.30 and 2021.3.37 the vertShadowCaster input parameter changed.
 //Unity does not allow patch versions in the UNITY_VERSION macro so picking the correct function cannot be done automatically for these versions.
 //If you are running a version Unity 2023.3 that shows compile errors compiling this shader, change SHADOW_VERTEX_OUTPUT to 0
-#if UNITY_VERSION >= 202130
+
+#if UNITY_VERSION >= 60000000
+#define SHADOW_VERTEX_OUTPUT_PARAM 1
+#elif UNITY_VERSION >= 202130
 #define SHADOW_VERTEX_OUTPUT 1
 #endif
 
@@ -20,7 +23,7 @@
 
 //Shadow Vertex Transform function
 void transformVertexShadow(VertexInput v
-#if SHADOW_VERTEX_OUTPUT
+#if SHADOW_VERTEX_OUTPUT || SHADOW_VERTEX_OUTPUT_PARAM
 	, out VertexOutput output
 #else
 	, out float4 opos : SV_POSITION
@@ -38,7 +41,9 @@ void transformVertexShadow(VertexInput v
 	v.vertex.xyz += v.normal * displacement;
 
 	//Apply Unity Standard vertex shader for vertex attribute transforms.
-#if SHADOW_VERTEX_OUTPUT
+#if SHADOW_VERTEX_OUTPUT_PARAM
+	vertShadowCaster(v, output
+#elif SHADOW_VERTEX_OUTPUT
 	output = vertShadowCaster(v
 #else
 	vertShadowCaster(v, opos
@@ -59,7 +64,7 @@ void domainTess(
 	OutputPatch<VertexInput, 3> patch,
 	float3 barycentrCoords : SV_DomainLocation,
 	uint pid : SV_PrimitiveID
-#if SHADOW_VERTEX_OUTPUT
+#if SHADOW_VERTEX_OUTPUT || SHADOW_VERTEX_OUTPUT_PARAM
 	, out  VertexOutput output
 #else
 	, out float4 opos : SV_POSITION
@@ -87,7 +92,7 @@ void domainTess(
 
 	UNITY_TRANSFER_VERTEX_OUTPUT_STEREO(patch[0], data)
 
-#if SHADOW_VERTEX_OUTPUT
+#if SHADOW_VERTEX_OUTPUT || SHADOW_VERTEX_OUTPUT_PARAM
 	transformVertexShadow(data, output
 #else
 	transformVertexShadow(data, opos
